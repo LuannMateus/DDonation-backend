@@ -1,7 +1,7 @@
 export default class DonorCreditCard {
-    private id: string;
-    private ownerId: string;
-    private creditCardId: string;
+    public id: string;
+    public ownerId: string;
+    public creditCardId: string;
 
     constructor(id: string, ownerId: string, creditCardId: string) {
         this.id = id;

@@ -1,10 +1,10 @@
 export default class Donation {
-    private id: string;
-    private ownerId: string;
-    private donationRequestId: string;
-    private paymentMethodId: string;
-    private amount: number;
-    private created_at: Date;
+    public id: string;
+    public ownerId: string;
+    public donationRequestId: string;
+    public paymentMethodId: string;
+    public amount: number;
+    public created_at: Date;
 
     constructor(
         id: string,

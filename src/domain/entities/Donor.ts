@@ -1,19 +1,19 @@
 export default class Donor {
-    private id: string;
+    public id: string;
 
-    private firstName: string;
+    public firstName: string;
 
-    private lastName: string;
+    public lastName: string;
 
-    private donorType: string;
+    public donorType: string;
 
-    private CPF: string;
+    public CPF: string;
 
-    private profileImage: string;
+    public profileImage: string;
 
-    private email: string;
+    public email: string;
 
-    private password: string;
+    public password: string;
 
     constructor(
         id: string,

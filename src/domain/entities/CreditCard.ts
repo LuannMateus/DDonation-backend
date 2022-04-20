@@ -1,10 +1,10 @@
 export default class CreditCard {
-    private id: string;
-    private type: string;
-    private holderName: string;
-    private creditCardNumber: number;
-    private validity: number;
-    private cvv: number;
+    public id: string;
+    public type: string;
+    public holderName: string;
+    public creditCardNumber: number;
+    public validity: number;
+    public cvv: number;
 
     constructor(
         id: string,

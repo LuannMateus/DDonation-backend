@@ -1,10 +1,10 @@
 export default class DonationRequest {
-    private id: string;
-    private title: string;
-    private ownerId: string;
-    private daysRemaining: number;
-    private target: number;
-    private reached: number;
+    public id: string;
+    public title: string;
+    public ownerId: string;
+    public daysRemaining: number;
+    public target: number;
+    public reached: number;
 
     constructor(
         id: string,
