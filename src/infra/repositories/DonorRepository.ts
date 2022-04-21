@@ -1,5 +1,7 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import Donor from '../../domain/entities/Donor';
-import { IDonorRepository } from '../../domain/repository/IDonorRepository';
+import { IDonorRepository } from '../../domain/repositories/IDonorRepository';
+import { NotFoundError } from '../../presentation/errors';
 import { prisma } from '../database/prisma';
 
 export default class DonorRepository implements IDonorRepository {
@@ -25,5 +27,18 @@ export default class DonorRepository implements IDonorRepository {
         }
 
         return donor;
+    }
+
+    async update(id: string, donor: Donor): Promise<void> {
+        try {
+            await prisma.donor.update({
+                data: donor,
+                where: { id },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+            }
+        }
     }
 }

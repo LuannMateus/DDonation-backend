@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import App from './app';
-import { logger } from './utils/pino';
+import { logger } from '../utils/pino';
 
 const app = new App().getApp;
 

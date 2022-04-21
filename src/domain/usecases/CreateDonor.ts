@@ -1,4 +1,4 @@
-import { IDonorRepository } from '../repository/IDonorRepository';
+import { IDonorRepository } from '../repositories/IDonorRepository';
 import Donor from '../entities/Donor';
 
 export default class CreateDonor {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import Donor from '../domain/entities/Donor';
-import CreateDonor from '../domain/usecases/CreateDonor';
-import DonorRepository from '../infra/repository/DonorRepository';
+import Donor from '../../domain/entities/Donor';
+import CreateDonor from '../../domain/usecases/CreateDonor';
+import DonorRepository from '../../infra/repositories/DonorRepository';
 
 export default class CreateDonorController {
     async handle(req: Request, res: Response) {

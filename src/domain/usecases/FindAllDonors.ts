@@ -1,5 +1,5 @@
 import Donor from '../entities/Donor';
-import { IDonorRepository } from '../repository/IDonorRepository';
+import { IDonorRepository } from '../repositories/IDonorRepository';
 
 export default class FindAllDonors {
     constructor(private readonly donorRepository: IDonorRepository) {}

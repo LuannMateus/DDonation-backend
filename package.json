@@ -2,10 +2,10 @@
     "name": "ddonation-backend",
     "version": "1.0.0",
     "description": "",
-    "main": "./src/server.ts",
+    "main": "./src/main/server.ts",
     "scripts": {
         "build": "tsc",
-        "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+        "dev": "ts-node-dev --ignore-watch node_modules src/main/server.ts",
         "lint-code": "eslint src --max-warnings=0",
         "lint-staged": "lint-staged",
         "commit": "cz",
