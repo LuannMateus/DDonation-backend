@@ -8,4 +8,10 @@ export default class DonorRepository implements IDonorRepository {
             data: { ...donor },
         });
     }
+
+    async findAll(): Promise<Donor[]> {
+        const donors = await prisma.donor.findMany();
+
+        return donors;
+    }
 }
