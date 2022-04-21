@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import DonorRouter from './routes/donorRoutes';
+import DonationRequestRouter from './routes/donationRequestRoutes';
 
 export default class App {
     private app: Application;
@@ -22,6 +23,7 @@ export default class App {
 
     private routes(): void {
         this.app.use('/api/v1', DonorRouter);
+        this.app.use('/api/v1', DonationRequestRouter);
     }
 
     public get getApp(): Application {

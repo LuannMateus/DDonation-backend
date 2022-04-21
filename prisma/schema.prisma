@@ -26,4 +26,24 @@ model Donor {
     email String
 
     password String
+
+    donationRequests DonationRequest[]
 }
+
+model DonationRequest {
+    id String @id @default(uuid())
+
+    title String
+
+    description String
+
+    owner Donor @relation(fields: [ownerId],  references: [id])
+    ownerId String
+
+    daysRemaining Int
+
+    target Int
+
+    reached Int
+}
+
