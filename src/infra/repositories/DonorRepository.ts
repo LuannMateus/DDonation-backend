@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import Donor from '../../domain/entities/Donor';
 import { IDonorRepository } from '../../domain/repositories/IDonorRepository';
-import { NotFoundError } from '../../presentation/errors';
+import { FkError, NotFoundError } from '../../presentation/errors';
 import { prisma } from '../database/prisma';
 
 export default class DonorRepository implements IDonorRepository {
@@ -38,6 +38,20 @@ export default class DonorRepository implements IDonorRepository {
         } catch (e) {
             if (e instanceof PrismaClientKnownRequestError) {
                 if (e.code === 'P2025') throw new NotFoundError();
+            }
+        }
+    }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await prisma.donor.delete({
+                where: { id },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+
+                if (e.code === 'P2003') throw new FkError();
             }
         }
     }
