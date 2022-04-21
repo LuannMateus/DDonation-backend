@@ -14,4 +14,16 @@ export default class DonorRepository implements IDonorRepository {
 
         return donors;
     }
+
+    async findById(id: string): Promise<Donor> {
+        const donor = await prisma.donor.findUnique({
+            where: { id },
+        });
+
+        if (!donor) {
+            throw new Error('Donor not found');
+        }
+
+        return donor;
+    }
 }
