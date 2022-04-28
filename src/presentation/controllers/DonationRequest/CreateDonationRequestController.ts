@@ -4,7 +4,7 @@ import CreateDonationRequest from '../../../domain/usecases/DonationRequest/Crea
 import DonationRequestRepository from '../../../infra/repositories/DonationRequestRepository';
 import { ServerError } from '../../errors';
 
-export default class CreateDonationRequestController {
+export class CreateDonationRequestController {
     async handle(req: Request, res: Response) {
         const {
             id,
