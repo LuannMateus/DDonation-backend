@@ -23,7 +23,7 @@ model Donor {
 
     profileImage String
 
-    email String
+    email String @unique
 
     password String
 
