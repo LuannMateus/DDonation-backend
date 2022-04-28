@@ -1,4 +1,4 @@
-import { IDonorRepository } from '../repositories/IDonorRepository';
+import { IDonorRepository } from '../../repositories/IDonorRepository';
 
 export default class DeleteDonorById {
     constructor(private readonly donorRepository: IDonorRepository) {}

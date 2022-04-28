@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import Donor from '../../domain/entities/Donor';
-import UpdateDonorById from '../../domain/usecases/UpdateDonorById';
-import DonorRepository from '../../infra/repositories/DonorRepository';
-import { NotFoundError } from '../errors';
+import Donor from '../../../domain/entities/Donor';
+import UpdateDonorById from '../../../domain/usecases/Donor/UpdateDonorById';
+import DonorRepository from '../../../infra/repositories/DonorRepository';
+import { NotFoundError } from '../../errors';
 
 export default class UpdateDonorByIdController {
     async handle(req: Request, res: Response) {

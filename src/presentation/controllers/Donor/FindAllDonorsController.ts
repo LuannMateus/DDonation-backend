@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import FindAllDonors from '../../domain/usecases/FindAllDonors';
-import DonorRepository from '../../infra/repositories/DonorRepository';
+import FindAllDonors from '../../../domain/usecases/Donor/FindAllDonors';
+import DonorRepository from '../../../infra/repositories/DonorRepository';
 
 export default class FindAllDonorsController {
     async handle(req: Request, res: Response) {

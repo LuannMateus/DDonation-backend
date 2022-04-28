@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import DeleteDonorById from '../../domain/usecases/DeleteDonorById';
-import DonorRepository from '../../infra/repositories/DonorRepository';
-import { FkError, NotFoundError } from '../errors';
+import DeleteDonorById from '../../../domain/usecases/Donor/DeleteDonorById';
+import DonorRepository from '../../../infra/repositories/DonorRepository';
+import { FkError, NotFoundError } from '../../errors';
 
 export default class DeleteDonorByIdController {
     async handle(req: Request, res: Response) {

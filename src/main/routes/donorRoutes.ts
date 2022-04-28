@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import FindAllDonorsController from '../../presentation/controllers/FindAllDonorsController';
-import FindDonorByIdController from '../../presentation/controllers/FindDonorByIdController';
-import CreateDonorController from '../../presentation/controllers/CreateDonorController';
-import UpdateDonorByIdController from '../../presentation/controllers/UpdateDonorByIdController';
-import DeleteDonorByIdController from '../../presentation/controllers/DeleteDonorByIdController';
+import FindAllDonorsController from '../../presentation/controllers/Donor/FindAllDonorsController';
+import FindDonorByIdController from '../../presentation/controllers/Donor/FindDonorByIdController';
+import CreateDonorController from '../../presentation/controllers/Donor/CreateDonorController';
+import UpdateDonorByIdController from '../../presentation/controllers/Donor/UpdateDonorByIdController';
+import DeleteDonorByIdController from '../../presentation/controllers/Donor/DeleteDonorByIdController';
 
 const donorRouter = Router();
 
