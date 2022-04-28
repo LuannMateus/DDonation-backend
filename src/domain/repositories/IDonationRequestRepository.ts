@@ -8,4 +8,6 @@ export interface IDonationRequestRepository {
     findById(id: string): Promise<DonationRequest>;
 
     updateById(id: string, donationRequest: DonationRequest): Promise<void>;
+
+    deleteById(id: string): Promise<void>;
 }

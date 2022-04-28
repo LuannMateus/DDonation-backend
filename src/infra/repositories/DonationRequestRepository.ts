@@ -68,4 +68,18 @@ export default class DonationRequestRepository
             throw new ServerError();
         }
     }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await prisma.donationRequest.delete({
+                where: { id },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+            }
+
+            throw new ServerError();
+        }
+    }
 }
