@@ -10,15 +10,21 @@ import {
     PrismaClientKnownRequestError,
     PrismaClientValidationError,
 } from '@prisma/client/runtime';
-import { logger } from '../../utils/pino';
-
 export default class DonationRequestRepository
     implements IDonationRequestRepository
 {
     async save(donationRequest: DonationRequest): Promise<void> {
-        await prisma.donationRequest.create({
-            data: donationRequest,
-        });
+        try {
+            await prisma.donationRequest.create({
+                data: donationRequest,
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
+
+            throw new ServerError();
+        }
     }
 
     async findAll(): Promise<DonationRequest[]> {
@@ -55,8 +61,6 @@ export default class DonationRequestRepository
                 data: donationRequest,
             });
         } catch (e) {
-            logger.error(e);
-
             if (e instanceof PrismaClientKnownRequestError) {
                 if (e.code === 'P2025') throw new NotFoundError();
             }

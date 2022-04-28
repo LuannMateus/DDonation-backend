@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Donor from '../../../domain/entities/Donor';
 import CreateDonor from '../../../domain/usecases/Donor/CreateDonor';
 import DonorRepository from '../../../infra/repositories/DonorRepository';
+import { BadRequestError, ServerError } from '../../errors';
 
 export default class CreateDonorController {
     async handle(req: Request, res: Response) {
@@ -33,7 +34,17 @@ export default class CreateDonorController {
         try {
             await createDonorUseCase.execute(donor);
         } catch (e) {
-            return res.status(400).end();
+            if (e instanceof BadRequestError) {
+                return res.status(400).json({
+                    message: e.message,
+                });
+            }
+
+            if (e instanceof ServerError) {
+                return res.status(500).json({
+                    message: e.message,
+                });
+            }
         }
 
         return res.status(201).json(donor);

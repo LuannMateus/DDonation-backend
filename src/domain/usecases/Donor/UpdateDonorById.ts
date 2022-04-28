@@ -5,6 +5,6 @@ export default class UpdateDonorById {
     constructor(private readonly donorRepository: IDonorRepository) {}
 
     async execute(id: string, donor: Donor) {
-        await this.donorRepository.update(id, donor);
+        await this.donorRepository.updateById(id, donor);
     }
 }

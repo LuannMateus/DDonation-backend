@@ -1,35 +1,72 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import {
+    PrismaClientKnownRequestError,
+    PrismaClientValidationError,
+} from '@prisma/client/runtime';
 import Donor from '../../domain/entities/Donor';
 import { IDonorRepository } from '../../domain/repositories/IDonorRepository';
-import { FkError, NotFoundError } from '../../presentation/errors';
+import {
+    BadRequestError,
+    FkError,
+    NotFoundError,
+    ServerError,
+} from '../../presentation/errors';
+import { logger } from '../../utils/pino';
 import { prisma } from '../database/prisma';
 
 export default class DonorRepository implements IDonorRepository {
     async save(donor: Donor): Promise<void> {
-        await prisma.donor.create({
-            data: { ...donor },
-        });
+        try {
+            await prisma.donor.create({
+                data: { ...donor },
+            });
+        } catch (e) {
+            logger.info(e);
+
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2002') {
+                    const meta = e.meta as { target: string[] };
+
+                    throw new BadRequestError(`${meta.target} already exists`);
+                }
+            }
+
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
+
+            throw new ServerError();
+        }
     }
 
     async findAll(): Promise<Donor[]> {
-        const donors = await prisma.donor.findMany();
+        try {
+            const donors = await prisma.donor.findMany();
 
-        return donors;
+            return donors;
+        } catch (e) {
+            throw new ServerError();
+        }
     }
 
     async findById(id: string): Promise<Donor> {
-        const donor = await prisma.donor.findUnique({
-            where: { id },
-        });
+        try {
+            const donor = await prisma.donor.findUnique({
+                where: { id },
+            });
 
-        if (!donor) {
-            throw new Error('Donor not found');
+            if (!donor) {
+                throw new Error('Donor not found');
+            }
+
+            return donor;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
+            throw new ServerError();
         }
-
-        return donor;
     }
 
-    async update(id: string, donor: Donor): Promise<void> {
+    async updateById(id: string, donor: Donor): Promise<void> {
         try {
             await prisma.donor.update({
                 data: donor,
@@ -39,6 +76,12 @@ export default class DonorRepository implements IDonorRepository {
             if (e instanceof PrismaClientKnownRequestError) {
                 if (e.code === 'P2025') throw new NotFoundError();
             }
+
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
+
+            throw new ServerError();
         }
     }
 
