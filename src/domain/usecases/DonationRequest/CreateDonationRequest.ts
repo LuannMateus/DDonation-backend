@@ -1,5 +1,5 @@
-import DonationRequest from '../entities/DonationRequest';
-import { IDonationRequestRepository } from '../repositories/IDonationRequestRepository';
+import DonationRequest from '../../entities/DonationRequest';
+import { IDonationRequestRepository } from '../../repositories/IDonationRequestRepository';
 
 export default class CreateDonationRequest {
     constructor(

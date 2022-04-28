@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import DonationRequest from '../../domain/entities/DonationRequest';
-import CreateDonationRequest from '../../domain/usecases/CreateDonationRequest';
-import DonationRequestRepository from '../../infra/repositories/DonationRequestRepository';
+import DonationRequest from '../../../domain/entities/DonationRequest';
+import CreateDonationRequest from '../../../domain/usecases/DonationRequest/CreateDonationRequest';
+import DonationRequestRepository from '../../../infra/repositories/DonationRequestRepository';
+import { ServerError } from '../../errors';
 
 export default class CreateDonationRequestController {
     async handle(req: Request, res: Response) {
@@ -31,11 +32,17 @@ export default class CreateDonationRequestController {
         );
 
         try {
-            await createDonationRequestUseCase.execute(donationRequest);
-        } catch (e) {
-            return res.status(400).end();
-        }
+            const donationRequests = await createDonationRequestUseCase.execute(
+                donationRequest,
+            );
 
-        return res.status(201).end();
+            return res.status(201).json(donationRequests);
+        } catch (e) {
+            if (e instanceof ServerError) {
+                return res.status(500).json({
+                    message: e.message,
+                });
+            }
+        }
     }
 }

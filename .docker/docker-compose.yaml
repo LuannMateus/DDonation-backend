@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+    db:
+        image: postgres:14.1-alpine
+        restart: always
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=ddonation
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./pgData:/var/lib/postgresql
+        networks:
+            - postgres-compose-network
+
+    pgAdmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: 'dev@gmail.com'
+            PGADMIN_DEFAULT_PASSWORD: 'dev'
+        ports:
+            - '16543:80'
+        depends_on:
+            - db
+        networks:
+            - postgres-compose-network
+
+networks:
+    postgres-compose-network:
+        driver: bridge
