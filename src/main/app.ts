@@ -1,8 +1,10 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+
 import DonorRouter from './routes/donorRoutes';
 import DonationRequestRouter from './routes/donationRequestRoutes';
 import CreditCardTypeRoutes from './routes/creditCardTypeRoutes';
+import donorCreditCardRouter from './routes/donorCreditCardRoutes';
 
 export default class App {
     private app: Application;
@@ -26,6 +28,7 @@ export default class App {
         this.app.use('/api/v1', DonorRouter);
         this.app.use('/api/v1', DonationRequestRouter);
         this.app.use('/api/v1', CreditCardTypeRoutes);
+        this.app.use('/api/v1', donorCreditCardRouter);
     }
 
     public get getApp(): Application {
