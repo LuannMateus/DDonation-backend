@@ -1,9 +1,41 @@
 import { prisma } from '../database/prisma';
 import { IDonorCreditCardRepository } from '../../domain/repositories/IDonorCreditCardRepository';
 import DonorCreditCard from '../../domain/entities/DonorCreditCard';
-import { ServerError } from '../../presentation/errors';
+import {
+    BadRequestError,
+    FkError,
+    ServerError,
+} from '../../presentation/errors';
+import {
+    PrismaClientKnownRequestError,
+    PrismaClientValidationError,
+} from '@prisma/client/runtime';
 
 export class DonorCreditCardRepository implements IDonorCreditCardRepository {
+    async save(donorCreditCard: DonorCreditCard): Promise<DonorCreditCard> {
+        try {
+            return await prisma.donorCreditCard.create({
+                data: {
+                    ...donorCreditCard,
+                },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2003') {
+                    const meta = e.meta as { field_name: string[] };
+
+                    throw new FkError(`${meta.field_name} not found`);
+                }
+            }
+
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
+
+            throw new ServerError();
+        }
+    }
+
     async findAll(): Promise<DonorCreditCard[]> {
         try {
             return await prisma.donorCreditCard.findMany();
