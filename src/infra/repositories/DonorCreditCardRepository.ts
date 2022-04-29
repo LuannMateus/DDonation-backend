@@ -4,6 +4,7 @@ import DonorCreditCard from '../../domain/entities/DonorCreditCard';
 import {
     BadRequestError,
     FkError,
+    NotFoundError,
     ServerError,
 } from '../../presentation/errors';
 import {
@@ -40,6 +41,22 @@ export class DonorCreditCardRepository implements IDonorCreditCardRepository {
         try {
             return await prisma.donorCreditCard.findMany();
         } catch (e) {
+            throw new ServerError();
+        }
+    }
+
+    async findById(id: string): Promise<DonorCreditCard> {
+        try {
+            const donorCardCredit = await prisma.donorCreditCard.findUnique({
+                where: { id },
+            });
+
+            if (!donorCardCredit) throw new NotFoundError();
+
+            return donorCardCredit;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
             throw new ServerError();
         }
     }
