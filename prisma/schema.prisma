@@ -28,6 +28,8 @@ model Donor {
     password String
 
     donationRequests DonationRequest[]
+
+    creditCards DonorCreditCard[]
 }
 
 model DonationRequest {
@@ -47,3 +49,30 @@ model DonationRequest {
     reached Int
 }
 
+model CreditCardType {
+  id String @id @default(uuid())
+
+  name String
+
+  type String
+
+  creditCardTypes DonorCreditCard[]
+}
+
+model DonorCreditCard {
+  id String @id @default(uuid())
+
+  creditCardType CreditCardType @relation(fields: [creditCardTypeId], references: [id])
+  creditCardTypeId String
+
+  donor Donor @relation(fields: [donorId], references: [id])
+  donorId String
+
+  holderName String
+
+  creditCardNumber Int
+
+  validity Int
+
+  cvv Int
+}
