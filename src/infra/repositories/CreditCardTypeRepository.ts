@@ -6,7 +6,10 @@ import {
     NotFoundError,
     ServerError,
 } from '../../presentation/errors';
-import { PrismaClientValidationError } from '@prisma/client/runtime';
+import {
+    PrismaClientKnownRequestError,
+    PrismaClientValidationError,
+} from '@prisma/client/runtime';
 
 export class CreditCardTypeRepository implements ICreditCardTypeRepository {
     async save(creditCardType: CreditCardType): Promise<void> {
@@ -44,6 +47,28 @@ export class CreditCardTypeRepository implements ICreditCardTypeRepository {
             return creditCardType;
         } catch (e) {
             if (e instanceof NotFoundError) throw new NotFoundError();
+
+            throw new ServerError();
+        }
+    }
+
+    async updateById(
+        id: string,
+        creditCardType: CreditCardType,
+    ): Promise<void> {
+        try {
+            await prisma.creditCardType.update({
+                where: { id },
+                data: creditCardType,
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+            }
+
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
 
             throw new ServerError();
         }

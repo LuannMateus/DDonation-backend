@@ -6,4 +6,6 @@ export interface ICreditCardTypeRepository {
     findAll(): Promise<CreditCardType[]>;
 
     findById(id: string): Promise<CreditCardType>;
+
+    updateById(id: string, creditCardType: CreditCardType): Promise<void>;
 }
