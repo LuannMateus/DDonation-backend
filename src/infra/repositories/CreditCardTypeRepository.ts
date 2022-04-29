@@ -73,4 +73,18 @@ export class CreditCardTypeRepository implements ICreditCardTypeRepository {
             throw new ServerError();
         }
     }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await prisma.creditCardType.delete({
+                where: { id },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+            }
+
+            throw new ServerError();
+        }
+    }
 }

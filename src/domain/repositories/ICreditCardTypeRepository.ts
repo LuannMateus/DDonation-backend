@@ -8,4 +8,6 @@ export interface ICreditCardTypeRepository {
     findById(id: string): Promise<CreditCardType>;
 
     updateById(id: string, creditCardType: CreditCardType): Promise<void>;
+
+    deleteById(id: string): Promise<void>;
 }
