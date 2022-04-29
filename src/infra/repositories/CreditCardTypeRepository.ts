@@ -1,7 +1,11 @@
 import { prisma } from '../database/prisma';
 import { CreditCardType } from '../../domain/entities/CreditCardType';
 import { ICreditCardTypeRepository } from '../../domain/repositories/ICreditCardTypeRepository';
-import { BadRequestError, ServerError } from '../../presentation/errors';
+import {
+    BadRequestError,
+    NotFoundError,
+    ServerError,
+} from '../../presentation/errors';
 import { PrismaClientValidationError } from '@prisma/client/runtime';
 
 export class CreditCardTypeRepository implements ICreditCardTypeRepository {
@@ -21,8 +25,26 @@ export class CreditCardTypeRepository implements ICreditCardTypeRepository {
 
     async findAll(): Promise<CreditCardType[]> {
         try {
-            return prisma.creditCardType.findMany();
+            return await prisma.creditCardType.findMany();
         } catch (e) {
+            throw new ServerError();
+        }
+    }
+
+    async findById(id: string): Promise<CreditCardType> {
+        try {
+            const creditCardType = await prisma.creditCardType.findUnique({
+                where: {
+                    id,
+                },
+            });
+
+            if (!creditCardType) throw new NotFoundError();
+
+            return creditCardType;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
             throw new ServerError();
         }
     }
