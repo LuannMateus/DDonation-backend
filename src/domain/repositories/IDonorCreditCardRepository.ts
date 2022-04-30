@@ -6,4 +6,6 @@ export interface IDonorCreditCardRepository {
     findAll(): Promise<DonorCreditCard[]>;
 
     findById(id: string): Promise<DonorCreditCard>;
+
+    updateById(id: string, donorCreditCard: DonorCreditCard): Promise<void>;
 }

@@ -60,4 +60,32 @@ export class DonorCreditCardRepository implements IDonorCreditCardRepository {
             throw new ServerError();
         }
     }
+
+    async updateById(
+        id: string,
+        donorCreditCard: DonorCreditCard,
+    ): Promise<void> {
+        try {
+            await prisma.donorCreditCard.update({
+                where: { id },
+                data: donorCreditCard,
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+
+                if (e.code === 'P2003') {
+                    const meta = e.meta as { field_name: string[] };
+
+                    throw new FkError(`${meta.field_name} not found`);
+                }
+            }
+
+            if (e instanceof PrismaClientValidationError) {
+                throw new BadRequestError();
+            }
+
+            throw new ServerError();
+        }
+    }
 }
