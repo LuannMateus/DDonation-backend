@@ -88,4 +88,18 @@ export class DonorCreditCardRepository implements IDonorCreditCardRepository {
             throw new ServerError();
         }
     }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await prisma.donorCreditCard.delete({
+                where: { id },
+            });
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2025') throw new NotFoundError();
+            }
+
+            throw new ServerError();
+        }
+    }
 }
