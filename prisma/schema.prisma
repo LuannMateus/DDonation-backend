@@ -70,9 +70,9 @@ model DonorCreditCard {
 
   holderName String
 
-  creditCardNumber Int
+  creditCardNumber String
 
-  validity Int
+  validity String
 
   cvv Int
 }
