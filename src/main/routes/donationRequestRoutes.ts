@@ -3,33 +3,39 @@ import { Router } from 'express';
 import { CreateDonationRequestController } from '../../presentation/controllers/DonationRequest/CreateDonationRequestController';
 import { DeleteDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/DeleteDonationRequestByIdController';
 import { FindAllDonationRequestController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestController';
+import { FindAllDonationRequestsByCategoryController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestsByCategoryController';
 import { FindDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/FindDonationRequestByIdController';
 import { UpdateDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/UpdateDonationRequestByIdController';
 
 const donationRequestRouter = Router();
 
 donationRequestRouter.get(
-    '/donations/:id',
+    '/donationRequests/:id',
     new FindDonationRequestByIdController().handle,
 );
 
 donationRequestRouter.get(
-    '/donations',
+    '/donationRequests/categories/:category',
+    new FindAllDonationRequestsByCategoryController().handle,
+);
+
+donationRequestRouter.get(
+    '/donationRequests',
     new FindAllDonationRequestController().handle,
 );
 
 donationRequestRouter.post(
-    '/donations',
+    '/donationRequests',
     new CreateDonationRequestController().handle,
 );
 
 donationRequestRouter.patch(
-    '/donations/:id',
+    '/donationRequests/:id',
     new UpdateDonationRequestByIdController().handle,
 );
 
 donationRequestRouter.delete(
-    '/donations/:id',
+    '/donationRequests/:id',
     new DeleteDonationRequestByIdController().handle,
 );
 

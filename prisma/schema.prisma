@@ -39,10 +39,16 @@ model DonationRequest {
 
     description String
 
+    image String
+
     owner Donor @relation(fields: [ownerId],  references: [id])
     ownerId String
 
     daysRemaining Int
+
+    category String
+
+    emergency Boolean @default(false)
 
     target Int
 

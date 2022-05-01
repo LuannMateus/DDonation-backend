@@ -5,6 +5,8 @@ export interface IDonationRequestRepository {
 
     findAll(): Promise<DonationRequest[]>;
 
+    findAllByCategory(category: string): Promise<DonationRequest[]>;
+
     findById(id: string): Promise<DonationRequest>;
 
     updateById(id: string, donationRequest: DonationRequest): Promise<void>;

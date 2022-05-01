@@ -2,6 +2,7 @@ import { prisma } from '../database/prisma';
 import DonationRequest from '../../domain/entities/DonationRequest';
 import {
     BadRequestError,
+    FkError,
     NotFoundError,
     ServerError,
 } from '../../presentation/errors';
@@ -19,6 +20,14 @@ export default class DonationRequestRepository
                 data: donationRequest,
             });
         } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2003') {
+                    const meta = e.meta as { field_name: string[] };
+
+                    throw new FkError(`${meta.field_name} not found`);
+                }
+            }
+
             if (e instanceof PrismaClientValidationError) {
                 throw new BadRequestError();
             }
@@ -31,6 +40,22 @@ export default class DonationRequestRepository
         try {
             return await prisma.donationRequest.findMany();
         } catch (e) {
+            throw new ServerError();
+        }
+    }
+
+    async findAllByCategory(category: string): Promise<DonationRequest[]> {
+        try {
+            const donors = await prisma.donationRequest.findMany({
+                where: { category },
+            });
+
+            if (!donors) throw new NotFoundError();
+
+            return donors;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
             throw new ServerError();
         }
     }
