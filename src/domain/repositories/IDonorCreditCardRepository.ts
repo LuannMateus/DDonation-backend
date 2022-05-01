@@ -7,7 +7,10 @@ export interface IDonorCreditCardRepository {
 
     findById(id: string): Promise<DonorCreditCard>;
 
-    updateById(id: string, donorCreditCard: DonorCreditCard): Promise<void>;
+    updateById(
+        id: string,
+        donorCreditCard: DonorCreditCard,
+    ): Promise<DonorCreditCard>;
 
     deleteById(id: string): Promise<void>;
 }

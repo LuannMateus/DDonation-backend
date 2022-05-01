@@ -64,9 +64,9 @@ export class DonorCreditCardRepository implements IDonorCreditCardRepository {
     async updateById(
         id: string,
         donorCreditCard: DonorCreditCard,
-    ): Promise<void> {
+    ): Promise<DonorCreditCard> {
         try {
-            await prisma.donorCreditCard.update({
+            return await prisma.donorCreditCard.update({
                 where: { id },
                 data: donorCreditCard,
             });

@@ -6,7 +6,10 @@ export class UpdateDonorCreditCardById {
         private readonly donorCreditCardRepository: IDonorCreditCardRepository,
     ) {}
 
-    async execute(id: string, donorCreditCard: DonorCreditCard): Promise<void> {
+    async execute(
+        id: string,
+        donorCreditCard: DonorCreditCard,
+    ): Promise<DonorCreditCard> {
         return await this.donorCreditCardRepository.updateById(
             id,
             donorCreditCard,

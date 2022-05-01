@@ -7,9 +7,9 @@ export default class DonorCreditCard {
 
     public holderName: string;
 
-    public creditCardNumber: number;
+    public creditCardNumber: string;
 
-    public validity: number;
+    public validity: string;
 
     public cvv: number;
 
@@ -18,8 +18,8 @@ export default class DonorCreditCard {
         creditCardTypeId: string,
         donorId: string,
         holderName: string,
-        creditCardNumber: number,
-        validity: number,
+        creditCardNumber: string,
+        validity: string,
         cvv: number,
     ) {
         this.id = id;

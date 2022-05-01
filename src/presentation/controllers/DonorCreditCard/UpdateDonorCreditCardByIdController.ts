@@ -24,9 +24,13 @@ export class UpdateDonorCreditCardByIdController {
             const updateDonorCreditCardByIdUseCase =
                 new UpdateDonorCreditCardById(donorCreditCardRepository);
 
-            await updateDonorCreditCardByIdUseCase.execute(id, donorCreditCard);
+            const updatedDonorCreditCard =
+                await updateDonorCreditCardByIdUseCase.execute(
+                    id,
+                    donorCreditCard,
+                );
 
-            return res.status(204).end();
+            return res.status(200).json(updatedDonorCreditCard);
         } catch (e) {
             if (e instanceof FkError) {
                 return res.status(400).json({
