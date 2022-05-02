@@ -4,19 +4,25 @@ import { CreateDonationRequestController } from '../../presentation/controllers/
 import { DeleteDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/DeleteDonationRequestByIdController';
 import { FindAllDonationRequestController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestController';
 import { FindAllDonationRequestsByCategoryController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestsByCategoryController';
+import { FindAllEmergencyDonationRequestsController } from '../../presentation/controllers/DonationRequest/FindAllEmergencyDonationRequestsController';
 import { FindDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/FindDonationRequestByIdController';
 import { UpdateDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/UpdateDonationRequestByIdController';
 
 const donationRequestRouter = Router();
 
 donationRequestRouter.get(
-    '/donationRequests/:id',
-    new FindDonationRequestByIdController().handle,
+    '/donationRequests/emergencies',
+    new FindAllEmergencyDonationRequestsController().handle,
 );
 
 donationRequestRouter.get(
     '/donationRequests/categories/:category',
     new FindAllDonationRequestsByCategoryController().handle,
+);
+
+donationRequestRouter.get(
+    '/donationRequests/:id',
+    new FindDonationRequestByIdController().handle,
 );
 
 donationRequestRouter.get(

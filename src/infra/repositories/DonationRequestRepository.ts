@@ -44,6 +44,18 @@ export default class DonationRequestRepository
         }
     }
 
+    async findAllEmergency(): Promise<DonationRequest[]> {
+        try {
+            return await prisma.donationRequest.findMany({
+                where: {
+                    emergency: true,
+                },
+            });
+        } catch (e) {
+            throw new ServerError();
+        }
+    }
+
     async findAllByCategory(category: string): Promise<DonationRequest[]> {
         try {
             const donors = await prisma.donationRequest.findMany({
