@@ -6,31 +6,31 @@ import { FindAllCreditCardTypesController } from '../../presentation/controllers
 import { FindCreditCardTypeByIdController } from '../../presentation/controllers/CreditCardType/FindCreditCardTypeByIdController';
 import { UpdateCreditCardTypeByIdController } from '../../presentation/controllers/CreditCardType/UpdateCreditCardTypeByIdController';
 
-const donationRequestRouter = Router();
+const creditCardTypeRouter = Router();
 
-donationRequestRouter.get(
+creditCardTypeRouter.get(
     '/creditCardTypes/:id',
     new FindCreditCardTypeByIdController().handle,
 );
 
-donationRequestRouter.get(
+creditCardTypeRouter.get(
     '/creditCardTypes',
     new FindAllCreditCardTypesController().handle,
 );
 
-donationRequestRouter.post(
+creditCardTypeRouter.post(
     '/creditCardTypes',
     new CreateCreditCardTypeController().handle,
 );
 
-donationRequestRouter.patch(
+creditCardTypeRouter.patch(
     '/creditCardTypes/:id',
     new UpdateCreditCardTypeByIdController().handle,
 );
 
-donationRequestRouter.delete(
+creditCardTypeRouter.delete(
     '/creditCardTypes/:id',
     new DeleteCreditCardTypeByIdController().handle,
 );
 
-export default donationRequestRouter;
+export default creditCardTypeRouter;
