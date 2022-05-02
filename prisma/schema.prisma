@@ -91,4 +91,6 @@ model Cause {
   title String
 
   description String
+
+  category String
 }

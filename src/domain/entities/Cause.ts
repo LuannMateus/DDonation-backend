@@ -7,10 +7,19 @@ export default class Cause {
 
     public description: string;
 
-    constructor(id: string, image: string, title: string, description: string) {
+    public category: string;
+
+    constructor(
+        id: string,
+        image: string,
+        title: string,
+        description: string,
+        category: string,
+    ) {
         this.id = id;
         this.image = image;
         this.title = title;
         this.description = description;
+        this.category = category;
     }
 }
