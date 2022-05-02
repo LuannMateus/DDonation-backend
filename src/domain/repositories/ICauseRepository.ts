@@ -1,7 +1,9 @@
 import Cause from '../entities/Cause';
 
 export interface ICauseRepository {
+    save(cause: Cause): Promise<void>;
+
     findAll(): Promise<Cause[]>;
 
-    save(cause: Cause): Promise<void>;
+    findById(id: string): Promise<Cause>;
 }

@@ -1,6 +1,10 @@
 import { prisma } from '../database/prisma';
 import Cause from '../../domain/entities/Cause';
-import { BadRequestError, ServerError } from '../../presentation/errors';
+import {
+    BadRequestError,
+    NotFoundError,
+    ServerError,
+} from '../../presentation/errors';
 import { ICauseRepository } from '../../domain/repositories/ICauseRepository';
 import {
     PrismaClientKnownRequestError,
@@ -30,6 +34,22 @@ export class CauseRepository implements ICauseRepository {
         try {
             return await prisma.cause.findMany();
         } catch (e) {
+            throw new ServerError();
+        }
+    }
+
+    async findById(id: string): Promise<Cause> {
+        try {
+            const cause = await prisma.cause.findUnique({
+                where: { id },
+            });
+
+            if (!cause) throw new NotFoundError();
+
+            return cause;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
             throw new ServerError();
         }
     }
