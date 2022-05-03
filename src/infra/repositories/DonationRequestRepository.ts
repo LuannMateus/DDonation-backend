@@ -72,10 +72,38 @@ export default class DonationRequestRepository
         }
     }
 
+    async findAllByCategoryAndEmergency(
+        category: string,
+        emergency: boolean,
+    ): Promise<DonationRequest[]> {
+        try {
+            const donationRequests = await prisma.donationRequest.findMany({
+                where: {
+                    category,
+                    emergency,
+                },
+                include: {
+                    owner: true,
+                },
+            });
+
+            if (!donationRequests) throw new NotFoundError();
+
+            return donationRequests;
+        } catch (e) {
+            if (e instanceof NotFoundError) throw new NotFoundError();
+
+            throw new ServerError();
+        }
+    }
+
     async findById(id: string): Promise<DonationRequest> {
         try {
             const donor = await prisma.donationRequest.findUnique({
                 where: { id },
+                include: {
+                    owner: true,
+                },
             });
 
             if (!donor) throw new NotFoundError();

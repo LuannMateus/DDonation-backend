@@ -3,12 +3,18 @@ import { Router } from 'express';
 import { CreateDonationRequestController } from '../../presentation/controllers/DonationRequest/CreateDonationRequestController';
 import { DeleteDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/DeleteDonationRequestByIdController';
 import { FindAllDonationRequestController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestController';
+import { FindAllDonationRequestsByCategoryAndEmergencyController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestsByCategoryAndEmergencyController';
 import { FindAllDonationRequestsByCategoryController } from '../../presentation/controllers/DonationRequest/FindAllDonationRequestsByCategoryController';
 import { FindAllEmergencyDonationRequestsController } from '../../presentation/controllers/DonationRequest/FindAllEmergencyDonationRequestsController';
 import { FindDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/FindDonationRequestByIdController';
 import { UpdateDonationRequestByIdController } from '../../presentation/controllers/DonationRequest/UpdateDonationRequestByIdController';
 
 const donationRequestRouter = Router();
+
+donationRequestRouter.get(
+    '/donationRequests/categoriesAndEmergencies',
+    new FindAllDonationRequestsByCategoryAndEmergencyController().handle,
+);
 
 donationRequestRouter.get(
     '/donationRequests/emergencies',

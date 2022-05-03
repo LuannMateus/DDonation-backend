@@ -9,6 +9,11 @@ export interface IDonationRequestRepository {
 
     findAllByCategory(category: string): Promise<DonationRequest[]>;
 
+    findAllByCategoryAndEmergency(
+        category: string,
+        emergency: boolean,
+    ): Promise<DonationRequest[]>;
+
     findById(id: string): Promise<DonationRequest>;
 
     updateById(id: string, donationRequest: DonationRequest): Promise<void>;
